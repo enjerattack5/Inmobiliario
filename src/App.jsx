@@ -6,7 +6,7 @@ import { PropertyCard } from './components/PropertyCard';
 import { PropertyModal } from './components/PropertyModal';
 import { Filter } from 'lucide-react';
 import heroBg from './assets/hero.jpg'; // Revisa si la moviste a ./assets/sexo.jpeg
-
+import {FormularioPrueba} from './components/FormularioPrueba'
 export default function App() {
   const [filterType, setFilterType] = useState('Todos');
   const [filterCategory, setFilterCategory] = useState('Todos');
@@ -81,6 +81,7 @@ export default function App() {
             onClose={() => setSelectedProperty(null)}
           />
         )}
+        <FormularioPrueba/>
       </div>
     </div>
   );

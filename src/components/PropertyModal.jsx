@@ -1,17 +1,8 @@
-import React, { useState } from 'react';
-import { X, MapPin, CheckCircle2, MessageSquare, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
+import React from 'react';
+import { GaleriaMultimedia } from './GaleriaMultimedia'; // Asegúrate de que esté importado
+import { X, MapPin, CheckCircle2, MessageSquare, Phone } from 'lucide-react';
 
 export const PropertyModal = ({ property, onClose }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const handleNextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
-  };
-
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + property.images.length) % property.images.length);
-  };
-
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex justify-center items-center p-4 overflow-y-auto">
       <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative my-auto">
@@ -22,32 +13,11 @@ export const PropertyModal = ({ property, onClose }) => {
           <X className="w-5 h-5" />
         </button>
 
-        <div className="relative h-72 sm:h-96 bg-slate-950">
-          <img 
-            src={property.images[currentImageIndex]} 
-            alt={property.title} 
-            className="w-full h-full object-cover"
-          />
-          {property.images.length > 1 && (
-            <>
-              <button 
-                onClick={handlePrevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow text-slate-800"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button 
-                onClick={handleNextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow text-slate-800"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-slate-900/70 text-white text-xs px-3 py-1 rounded-full">
-                {currentImageIndex + 1} / {property.images.length}
-              </div>
-            </>
-          )}
-        </div>
+        {/* AQUÍ REEMPLAZAMOS EL BLOQUE ANTERIOR POR LA GALERÍA MULTIMEDIA */}
+        <GaleriaMultimedia 
+          imagenes={property.imagenes || property.images || []} 
+          videos={property.videos || []} 
+        />
 
         <div className="p-6 sm:p-8">
           <div className="flex flex-wrap justify-between items-start gap-4 mb-4">
