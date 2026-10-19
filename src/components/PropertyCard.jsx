@@ -1,59 +1,65 @@
 import React from 'react';
-import { MapPin, Bed, Bath, Square } from 'lucide-react';
+import { ArrowUpRight, MapPin } from 'lucide-react';
 
 export const PropertyCard = ({ property, onClick }) => {
+  // Manejo de imagen principal proveniente de Cloudinary o arreglo local
+  const imagenPrincipal = 
+    (property.imagenes && property.imagenes.length > 0 && property.imagenes[0]) ||
+    (property.images && property.images.length > 0 && property.images[0]) ||
+    'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';
+
   return (
     <div 
-      className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition-all flex flex-col cursor-pointer group"
       onClick={onClick}
+      className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 cursor-pointer flex flex-col justify-between"
     >
-      <div className="relative h-56 overflow-hidden bg-slate-100">
-        <img 
-          src={property.images[0]} 
-          alt={property.title} 
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-        <span className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
-          property.type === 'Venta' ? 'bg-blue-900 text-white' : 'bg-amber-500 text-blue-950'
-        }`}>
-          {property.type}
-        </span>
-        <span className="absolute top-4 right-4 bg-slate-900/70 backdrop-blur-md text-white text-xs px-2.5 py-1 rounded-full font-medium">
-          {property.category}
-        </span>
-      </div>
-
-      <div className="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div className="text-xl font-extrabold text-blue-950 mb-1">
-            {property.price}
-          </div>
-          <h3 className="font-bold text-slate-800 text-base mb-2 line-clamp-1 group-hover:text-blue-900 transition-colors">
-            {property.title}
-          </h3>
-          <div className="flex items-center gap-1.5 text-slate-500 text-sm mb-4">
-            <MapPin className="w-4 h-4 text-amber-500 flex-shrink-0" />
-            <span className="truncate">{property.location}</span>
+      <div>
+        {/* Contenedor de la Imagen */}
+        <div className="relative h-56 sm:h-64 w-full overflow-hidden p-3 pb-0">
+          <div className="w-full h-full rounded-2xl overflow-hidden relative">
+            <img 
+              src={imagenPrincipal} 
+              alt={property.titulo || property.title} 
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            {/* Etiqueta flotante superior */}
+            <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-[#12382F] text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
+              {property.etiqueta || property.category || 'Destacado'}
+            </span>
           </div>
         </div>
 
-        <div className="border-t border-slate-100 pt-3 flex items-center justify-between text-slate-600 text-xs font-medium">
-          {property.bedrooms > 0 && (
-            <div className="flex items-center gap-1">
-              <Bed className="w-4 h-4 text-slate-400" />
-              <span>{property.bedrooms} hab.</span>
-            </div>
-          )}
-          {property.bathrooms > 0 && (
-            <div className="flex items-center gap-1">
-              <Bath className="w-4 h-4 text-slate-400" />
-              <span>{property.bathrooms} baños</span>
-            </div>
-          )}
-          <div className="flex items-center gap-1">
-            <Square className="w-4 h-4 text-slate-400" />
-            <span>{property.area}</span>
+        {/* Detalles del Terreno */}
+        <div className="p-5">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[#17382D] mb-1">
+            {property.ubicacion?.ciudad || property.location || 'TABASCO'}
+          </p>
+
+          <h3 className="text-2xl font-serif font-bold text-[#12382F] mb-3 group-hover:text-[#17382D] transition-colors">
+            {property.titulo || property.title}
+          </h3>
+
+          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium mb-4">
+            <span className="inline-block text-[#17382D]">📐</span>
+            <span>{property.superficie || property.area || '300 m²'}</span>
           </div>
+        </div>
+      </div>
+
+      {/* Pie de Tarjeta: Precio y Botón Circular Verde Lima */}
+      <div className="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-50">
+        <div>
+          <span className="text-[10px] text-slate-400 block font-semibold uppercase">Desde</span>
+          <span className="text-xl font-bold text-[#12382F]">
+            {typeof property.precio === 'number' 
+              ? `$${property.precio.toLocaleString('es-MX')} MXN` 
+              : property.price || `$${property.precio}`}
+          </span>
+        </div>
+
+        {/* Botón Circular Verde Lima */}
+        <div className="w-10 h-10 rounded-full bg-[#D8EF8B] group-hover:bg-[#c8e274] text-[#12382F] flex items-center justify-center transition-all shadow-sm">
+          <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </div>
       </div>
     </div>
